@@ -1334,7 +1334,21 @@ public class Game {
 			Audio.playSound("inventory/open_inventory.mp3", 0.5f, 1f);
 		}
 
-		setScreens(menuMode);
+		if(characterScreen == null) characterScreen = new CharacterScreen(player, UiSkin.getSkin());
+		if(inventoryScreen == null) inventoryScreen = new InventoryScreen(player, UiSkin.getSkin());
+
+		if(menuMode == MenuMode.Hidden) {
+			characterScreen.setVisible(false);
+			inventoryScreen.setVisible(false);
+		}
+		else if(menuMode == MenuMode.Inventory) {
+			inventoryScreen.setVisible(true);
+			characterScreen.setVisible(false);
+		}
+		else if(menuMode == MenuMode.Character) {
+			characterScreen.setVisible(true);
+			inventoryScreen.setVisible(false);
+		}
 
 		// Show the proper bag slots
 		Game.bag.visible = menuMode == MenuMode.Inventory;
@@ -1350,24 +1364,6 @@ public class Game {
 		// Hide the map!
 		if(Game.instance.getShowingMenu()) {
 			GameManager.renderer.showMap = false;
-		}
-	}
-
-	public void setScreens(MenuMode menuMode){
-		if(characterScreen == null) characterScreen = new CharacterScreen(player, UiSkin.getSkin());
-		if(inventoryScreen == null) inventoryScreen = new InventoryScreen(player, UiSkin.getSkin());
-
-		if(menuMode == MenuMode.Hidden) {
-			characterScreen.setVisible(false);
-			inventoryScreen.setVisible(false);
-		}
-		else if(menuMode == MenuMode.Inventory) {
-			inventoryScreen.setVisible(true);
-			characterScreen.setVisible(false);
-		}
-		else if(menuMode == MenuMode.Character) {
-			characterScreen.setVisible(true);
-			inventoryScreen.setVisible(false);
 		}
 	}
 
